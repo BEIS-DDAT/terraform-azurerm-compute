@@ -69,15 +69,16 @@ resource "azurerm_virtual_machine" "vm-linux" {
   }
 
   os_profile_linux_config {
-    disable_password_authentication = var.enable_ssh_key
+    disable_password_authentication = true 
+    admin_password = var.admin_password
 
-    dynamic ssh_keys {
-      for_each = var.enable_ssh_key ? [var.ssh_key] : []
-      content {
-        path     = "/home/${var.admin_username}/.ssh/authorized_keys"
-        key_data = file(var.ssh_key)
-      }
-    }
+     #dynamic ssh_keys {
+     # for_each = var.enable_ssh_key ? [var.ssh_key] : []
+     # content {
+     #   path     = "/home/${var.admin_username}/.ssh/authorized_keys"
+     #   key_data = file(var.ssh_key)
+     # }
+    #}
   }
 
   tags = var.tags
